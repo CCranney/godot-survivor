@@ -1,0 +1,2 @@
+class PlayerMovementContext:
+	pass
