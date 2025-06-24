@@ -1,17 +1,47 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkt548nta3van"]
+[gd_scene load_steps=8 format=3 uid="uid://dkt548nta3van"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_d1y30"]
-size = Vector3(10, 0.25, 10)
+[ext_resource type="PackedScene" uid="uid://ji7ld681wose" path="res://Player/player.tscn" id="1_3su5c"]
+[ext_resource type="PackedScene" uid="uid://c4vwf0wi8rm4j" path="res://NPCs/dummy_interactor.tscn" id="2_pt4jb"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_w7osi"]
-size = Vector3(10, 0.25, 10)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3su5c"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pt4jb"]
+sky_material = SubResource("ProceduralSkyMaterial_3su5c")
+
+[sub_resource type="Environment" id="Environment_krrwo"]
+background_mode = 2
+sky = SubResource("Sky_pt4jb")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_pt4jb"]
+vertices = PackedVector3Array(-9.5, 0.625, -9.5, -9.5, 0.625, 9.5, 9.5, 0.625, 9.5, 9.5, 0.625, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krrwo"]
+albedo_color = Color(0.39308554, 0.3930855, 0.39308548, 1)
 
 [node name="dialogue_test_scene" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
-mesh = SubResource("BoxMesh_d1y30")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_krrwo")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
-shape = SubResource("BoxShape3D_w7osi")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_pt4jb")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+use_collision = true
+size = Vector3(20, 0.25, 20)
+material = SubResource("StandardMaterial3D_krrwo")
+
+[node name="Player" parent="." instance=ExtResource("1_3su5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1250001, 8.14362)
+
+[node name="DummyInteractor" parent="." instance=ExtResource("2_pt4jb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34240437, 1.1249998, -7.279869)

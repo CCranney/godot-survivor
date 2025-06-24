@@ -1,2 +1,3 @@
-abstract class PlayerMovementStrategy:
-	abstract func get_velocity() -> Vector3
+abstract class_name PlayerMovementStrategy extends Node
+
+abstract func get_input_direction() -> Vector2
