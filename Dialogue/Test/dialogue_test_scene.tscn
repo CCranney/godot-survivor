@@ -40,8 +40,10 @@ use_collision = true
 size = Vector3(20, 0.25, 20)
 material = SubResource("StandardMaterial3D_krrwo")
 
-[node name="Player" parent="." instance=ExtResource("1_3su5c")]
+[node name="Player" parent="." node_paths=PackedStringArray("test_target_object") instance=ExtResource("1_3su5c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1250001, 8.14362)
+test_target_object = NodePath("../DummyInteractor")
+movement_type = 1
 
 [node name="DummyInteractor" parent="." instance=ExtResource("2_pt4jb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34240437, 1.1249998, -7.279869)

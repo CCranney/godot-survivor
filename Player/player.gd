@@ -1,16 +1,22 @@
 extends CharacterBody3D
 
-@export var test_target_object: Node3D
-
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
+const MOVEMENT_CONSTANTS = preload("res://Constants/movement_constants.gd")
+
+@export var test_target_object: Node3D
+@export var movement_type: MOVEMENT_CONSTANTS.MovementTypes
 
 @onready var player_movement: PlayerMovementContext = PlayerMovementContext.new()
 @onready var test_navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 
+enum movement_types {
+	USER,
+	AUTO
+}
 
 func _ready() -> void:
-	player_movement.update_strategy("auto", self, test_target_object.global_position)
+	player_movement.update_strategy(movement_type, self, test_target_object.global_position)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

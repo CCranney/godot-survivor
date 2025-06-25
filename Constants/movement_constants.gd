@@ -1,0 +1,4 @@
+enum MovementTypes {
+	USER,
+	AUTO
+}
